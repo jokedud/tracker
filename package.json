@@ -1,0 +1,29 @@
+{
+  "name": "email-tracker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "tsc --noEmit",
+    "test": "node --test --experimental-strip-types lib/*.test.ts",
+    "db:migrate": "node scripts/migrate.mjs",
+    "link": "node scripts/make-link.mjs"
+  },
+  "dependencies": {
+    "next": "15.5.29",
+    "postgres": "^3.4.5",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "ua-parser-js": "^1.0.41"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/ua-parser-js": "^0.7.39",
+    "typescript": "^5.6.0"
+  }
+}

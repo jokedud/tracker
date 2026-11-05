@@ -15,6 +15,7 @@ export default async function LinkBuilder({ searchParams }: { searchParams: Prom
     <main>
       <nav>
         <a href="/dashboard">All events</a>
+        <a href="/dashboard/leads">Hot leads</a>
         <a href="/dashboard/links">Link builder</a>
       </nav>
       <h1>Link builder</h1>

@@ -10,3 +10,7 @@ tr.bot td { color: #999; }
 form { display: flex; gap: 8px; flex-wrap: wrap; align-items: end; margin: 12px 0; }
 input { padding: 6px 8px; font: inherit; }
 textarea { width: 100%; font-family: ui-monospace, monospace; font-size: 12px; }
+.toolbar { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin: 12px 0; }
+tr.hot td { background: #fff6e0; }
+.hot-badge { margin-left: 6px; padding: 1px 6px; border-radius: 8px; background: #f59e0b; color: #fff; font-size: 11px; font-weight: 600; }
+.tag { margin-right: 6px; }

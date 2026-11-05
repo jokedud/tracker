@@ -12,6 +12,7 @@ Each event records the timestamp, campaign, recipient ID, IP, country/region/cit
 | `GET /o/<campaign>/<recipient>?s=<sig>` | Open pixel. Always returns a 1x1 transparent GIF and logs an open when the signature is valid. |
 | `POST /api/ci` | Beacon from the click page (signed per click, whitelisted fields only, 8 KB max). |
 | `/dashboard` | Events table, per-campaign open/click counts, campaign filter, bot/scanner toggle. HTTP Basic auth with `DASHBOARD_PASSWORD`. |
+| `/dashboard/leads` | Hot leads: one row per recipient (bots/scanners excluded), ranked by an engagement score, repeat clickers highlighted, sortable by score, clicks or recency, with a "Copy as CSV" button. Score: 1 per minute with an open + 3 per minute with a click + 5 per extra UTC day engaged, so a burst of proxy opens counts once. |
 | `/dashboard/links` | Builds a signed link and pixel tag for one recipient. |
 
 The signature is `base64url(HMAC-SHA256(TRACKING_SECRET, kind \n campaign \n recipient \n destination))` truncated to 16 bytes. Any change to the campaign, recipient or destination invalidates the link. You can also restrict destinations to your own domains with `ALLOWED_DEST_HOSTS`.

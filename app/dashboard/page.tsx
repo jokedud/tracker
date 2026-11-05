@@ -31,6 +31,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
     <main>
       <nav>
         <a href="/dashboard">All events</a>
+        <a href="/dashboard/leads">Hot leads</a>
         <a href="/dashboard/links">Link builder</a>
         <a href={`/dashboard?${new URLSearchParams({ ...(campaign ? { campaign } : {}), bots: showBots ? "0" : "1" })}`}>
           {showBots ? "Hide" : "Show"} bots/scanners

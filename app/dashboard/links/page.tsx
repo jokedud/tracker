@@ -1,12 +1,16 @@
 import { headers } from "next/headers";
 import { allowedDestination, buildLinks } from "@/lib/sign.ts";
+import { isProtectedVercelHost } from "@/lib/vercel-host.ts";
 
 export const dynamic = "force-dynamic";
 
 export default async function LinkBuilder({ searchParams }: { searchParams: Promise<{ campaign?: string; recipient?: string; u?: string }> }) {
   const { campaign = "", recipient = "", u = "" } = await searchParams;
   const h = await headers();
-  const base = process.env.PUBLIC_BASE_URL ?? `${h.get("x-forwarded-proto") ?? "https"}://${h.get("host")}`;
+  const configuredBase = process.env.PUBLIC_BASE_URL?.trim();
+  const host = h.get("host");
+  const base = configuredBase || `${h.get("x-forwarded-proto") ?? "https"}://${host}`;
+  const protectedHost = !configuredBase && isProtectedVercelHost(host);
   const ready = campaign && recipient && u;
   const valid = ready ? allowedDestination(u) : null;
   const links = valid ? buildLinks(base, campaign, recipient, u) : null;
@@ -27,6 +31,14 @@ export default async function LinkBuilder({ searchParams }: { searchParams: Prom
       {ready && !valid && <p style={{ color: "crimson" }}>Destination must be an http(s) URL on an allowed host (ALLOWED_DEST_HOSTS).</p>}
       {links && (
         <>
+          {protectedHost && (
+            <p className="warning" role="alert">
+              <strong>These links will not work for customers.</strong> They use <code>{host}</code>, a Vercel preview, deployment or
+              team alias behind Deployment Protection, so recipients will hit a Vercel login page and no opens or clicks will be logged.
+              Set <code>PUBLIC_BASE_URL</code> to your production domain or a custom domain (e.g. <code>https://go.yourbusiness.com</code>)
+              and redeploy.
+            </p>
+          )}
           <h3>Tracked link</h3>
           <textarea readOnly rows={2} value={links.click} />
           <h3>Open pixel (paste into the email HTML)</h3>

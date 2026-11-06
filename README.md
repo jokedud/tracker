@@ -28,6 +28,7 @@ Postgres via the [`postgres`](https://github.com/porsager/postgres) driver, so i
    - `TRACKING_SECRET`: `openssl rand -hex 32`. Changing it invalidates every link already sent.
    - `DASHBOARD_PASSWORD`
    - Optional: `ALLOWED_DEST_HOSTS`, `IP_MODE`, `GEO_FALLBACK`, `DETAILED_FINGERPRINT`, `PUBLIC_BASE_URL`.
+   - `PUBLIC_BASE_URL` (e.g. `https://go.yourbusiness.com`): the base for links built in `/dashboard/links`. Without it the builder uses the host you opened the dashboard on. Vercel's team alias (`*-projects.vercel.app`), branch aliases (`*-git-*.vercel.app`) and deployment URLs sit behind Deployment Protection, so links built there send customers to a Vercel login page and log nothing; the builder warns when that happens. Set it to your production `.vercel.app` domain or a custom domain.
 4. Create the tables once, from your machine: `DATABASE_URL=... npm run db:migrate` (or paste `db/schema.sql` into the Neon/Supabase SQL editor).
 5. Deploy, then open `https://<your-app>.vercel.app/dashboard`. A custom domain (e.g. `go.yourbusiness.com`) improves deliverability and trust.
 
